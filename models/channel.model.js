@@ -1,8 +1,8 @@
 let MessageModel = require('./message.model');
 
-let ChatModel_max_id = 0;
+let ChannelModel_max_id = 0;
 
-class ChatModel {
+class ChannelModel {
 
     constructor({name, isDirected} = {}) {
 
@@ -28,9 +28,9 @@ class ChatModel {
 
 
     getNewId(id = null) {
-        let newId = id ? id : ++ ChatModel_max_id;
-        if (ChatModel_max_id < newId) {
-            ChatModel_max_id = newId;
+        let newId = id ? id : ++ ChannelModel_max_id;
+        if (ChannelModel_max_id < newId) {
+            ChannelModel_max_id = newId;
         }
         return newId;
     }
@@ -48,4 +48,4 @@ class ChatModel {
 
 }
 
-module.exports = ChatModel;
+module.exports = ChannelModel;

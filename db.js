@@ -1,10 +1,10 @@
 let UserModel = require('./models/user.model');
 let MessageModel = require('./models/message.model');
-let ChatModel = require('./models/chat.model');
+let ChannelModel = require('./models/channel.model');
 
 class DBEmulator {
     constructor() {
-        this.chats = [];
+        this.channels = [];
         this.users = [];
         this.usersOnline = [];
     }
@@ -31,26 +31,26 @@ class DBEmulator {
         return user;
     }
 
-    getFirstChat(chat_data = null){
-        let chat = null;
-        if (chat_data && chat_data.id) {
-            chat = this.chats.find(chat => (chat.id == chat_data.id));
+    getFirstChannel(channel_data = null){
+        let channel = null;
+        if (channel_data && channel_data.id) {
+            channel = this.channels.find(channel => (channel.id == channel_data.id));
         }
-        return chat;
+        return channel;
     }
 
-    createChat(chat_data = null){
-        let chat = new ChatModel(chat_data);
-        if(chat) this.chats.push(chat);
-        return chat;
+    createChannel(channel_data = null){
+        let channel = new ChannelModel(channel_data);
+        if(channel) this.channels.push(channel);
+        return channel;
     }
 
-    firstOrCreateChat(chat_data = null) {
-        let chat = this.getFirstChat(chat_data);
-        if (! chat) {
-            chat = this.createChat(chat_data);
+    firstOrCreateChannel(channel_data = null) {
+        let channel = this.getFirstChannel(channel_data);
+        if (! channel) {
+            channel = this.createChannel(channel_data);
         }
-        return chat;
+        return channel;
     }
 
     onlineUser(user){
@@ -67,24 +67,24 @@ class DBEmulator {
     }
 
     seedData() {
-        let chat1 = this.firstOrCreateChat({name: 'Hello Chat', isDirected: false});
-        let chat2 = this.firstOrCreateChat({name: 'Smile', isDirected: false});
-        this.firstOrCreateChat({name: 'test', isDirected: true});
+        let channel1 = this.firstOrCreateChannel({name: 'Hello Channel', isDirected: false});
+        let channel2 = this.firstOrCreateChannel({name: 'Smile', isDirected: false});
+        this.firstOrCreateChannel({name: 'test', isDirected: true});
 
         let user1 = this.firstOrCreateUser({
             id: 'test_user_1',
-            nickname: 'test_user 1'
+            nickname: 'test_user 1',
         });
         let user2 = this.firstOrCreateUser({
             id: 'test_user_2',
             nickname: 'test_user 2'
         });
 
-        chat1.postMessage({user: user1, text: "Hello! Hello!"});
-        chat1.postMessage({user: user1, text: "Smile!"});
-        chat1.postMessage({user: user2, text: "I love You!"});
-        chat2.postMessage({user: user1, text: "Test."});
-        chat2.postMessage({user: user1, text: "Test_2"});
+        channel1.postMessage({user: user1, text: "Hello! Hello!"});
+        channel1.postMessage({user: user1, text: "Smile!"});
+        channel1.postMessage({user: user2, text: "I love You!"});
+        channel2.postMessage({user: user1, text: "Test."});
+        channel2.postMessage({user: user1, text: "Test_2"});
 
 
     }
